@@ -1,7 +1,10 @@
 import nltk
 import json
+from nltk.stem import LancasterStemmer
 
-with open("booksummaries/booksummaries.txt","r",encoding= 'utf8', errors='ignore') as f:
+lancaster=LancasterStemmer()
+
+with open("booksummaries.txt","r",encoding= 'utf8', errors='ignore') as f:
     contents= f.readlines()
 
 books=[]
@@ -38,20 +41,24 @@ for con in contents:
 
 
 #print(books.shape,test_books.shape)
-
+x_train=[]
+y_train=[]
+summary_list=[]
 all_labels=[]
 count2=0
 for book in books:
-
-    data=book['summary'] 
-    words=nltk.word_tokenize(data)
-    tagged_words=nltk.pos_tag(words)
     try:
+        data=book['summary'] 
+        words=nltk.word_tokenize(data)
+        words_from_summary=[lancaster.stem(i) for i in words]
+        summary_list.append(words_from_summary)
+        tagged_words=nltk.pos_tag(words)
         labels=json.loads(book['genre']).values()
+        all_labels.extend(labels)
     except:
         #print(book[metadata][2])
         count2+=1
-    all_labels.extend(labels)
+    
     #print(tagged_words, labels)
 
 
