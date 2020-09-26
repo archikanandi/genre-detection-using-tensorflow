@@ -4,7 +4,7 @@ from nltk.stem import LancasterStemmer
 
 lancaster=LancasterStemmer()
 
-with open("../booksummaries/booksummaries.txt","r",encoding= 'utf8', errors='ignore') as f:
+with open("booksummaries.txt","r",encoding= 'utf8', errors='ignore') as f:
     contents= f.readlines()
 
 books=[]
